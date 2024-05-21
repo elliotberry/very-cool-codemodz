@@ -1,10 +1,10 @@
-module.exports = function(fileInfo, api) {
-    const j = api.jscodeshift;
+export default ({source}, {jscodeshift}) => {
+    const j = jscodeshift;
 
-    return j(fileInfo.source)
+    return j(source)
         .find(j.Identifier, { name: 'oldFunction' })
-        .forEach(path => {
-            path.node.name = 'newFunction';
+        .forEach(({node}) => {
+            node.name = 'newFunction';
         })
         .toSource();
 };
