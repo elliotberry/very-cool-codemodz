@@ -7,21 +7,20 @@
   "icon": "icon.png",
 
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.90.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:animehentaimodz.templateliteral"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
      
       {
-        "command": "animehentaimodz.templateliteral",
-        "title": "code mod: template literal"
+        "command": "animehentaimodz.fnToConst",
+        "title": "CODE MOD SON"
       }
     ]
   },
@@ -32,7 +31,8 @@
   },
   "devDependencies": {
     "eslint": "^8.50.0",
-    "vsce": "^2.15.0"
+    "vsce": "^2.15.0",
+    "@vscode/vsce": "^2.27.0"
   },
   "dependencies": {
     "jscodeshift": "^0.15.0"

@@ -1,22 +1,18 @@
 const vscode = require('vscode');
-const codemod = require('./codemod.js');
+const {codemod} = require('./apply-codemod.js');
 
+async function activate({subscriptions}) {
+  console.log('Congratulations, your extension "animehentaimodz" is now active!');
 
-async function activate({ subscriptions }) {
-    console.log('Congratulations, your extension "animehentaimodz" is now active!');
-
-
-    let disposable1 = vscode.commands.registerCommand('animehentaimodz.fnToConst', codemod(`fnToConst`));
-    let disposable = vscode.commands.registerCommand('animehentaimodz.templateliteral', codemod(`templateliteral`));
-
-    subscriptions.push(disposable1);
-    subscriptions.push(disposable);
-  
+  let disposable1 = vscode.commands.registerCommand('animehentaimodz.fnToConst', codemod(`fnToConst`));
+  subscriptions.push(disposable1);
 }
 
-function deactivate() {}
+function deactivate() {
+  console.log('Your extension "animehentaimodz" is now deactivated!');
+}
 
 module.exports = {
-    activate,
-    deactivate
+  activate,
+  deactivate,
 };

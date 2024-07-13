@@ -2,7 +2,7 @@ const {execSync} = require('child_process');
 const {join} = require('path');
 const fs = require('fs/promises');
 const os = require('os');
-
+const vscode = require('vscode');
 const jsCodeShiftPath = join(__dirname, 'node_modules', 'jscodeshift', 'bin', 'jscodeshift.js');
 
 const createTempFile = async sourceCode => {
@@ -12,19 +12,17 @@ const createTempFile = async sourceCode => {
   return tempFilePath;
 };
 
-async function applyCodemod2(text, fn='renameFunction') {
+async function applyCodemod2(text, fn = 'renameFunction') {
+  const codemodPath = join(__dirname, 'modz', `${fn}.js`);
+  const output = execSync(`echo \`"${text}"\` | node ${jsCodeShiftPath} -t ${codemodPath} --stdin`, {
+    input: text,
+    encoding: 'utf-8',
+  });
 
-    const codemodPath = join(__dirname, 'modz', `${fn}.js`);
-    const output = execSync(`echo "${text}" | node ${jsCodeShiftPath} -t ${codemodPath} --stdin`, {
-      input: text,
-      encoding: 'utf-8',
-    });
-  
-    
-    return output;
-  }
+  return output;
+}
 
-async function applyCodemod(text, fn='renameFunction') {
+async function applyCodemod(text, fn = 'renameFunction') {
   let fpath = await createTempFile(text);
   const codemodPath = join(__dirname, 'modz', `${fn}.js`);
   const output = execSync(`node ${jsCodeShiftPath} -t ${codemodPath} ${fpath}`, {
@@ -37,4 +35,21 @@ async function applyCodemod(text, fn='renameFunction') {
   return transformedCode;
 }
 
-exports.applyCodemod = applyCodemod;
+const editorCodemod = async fnName => {
+  try {
+    const editor = vscode.window.activeTextEditor;
+    if (editor) {
+      const document = editor.document;
+      // const transformedCode = await applyCodemod(document.getText(), fnName);
+
+      const fullRange = new vscode.Range(document.positionAt(0), document.positionAt(document.getText().length));
+
+      editor.edit(editBuilder => {
+        editBuilder.replace(fullRange, 'dad');
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+exports.codemod = editorCodemod;
