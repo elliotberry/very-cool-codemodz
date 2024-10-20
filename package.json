@@ -1,26 +1,36 @@
 {
-  "name": "animehentaimodz",
-  "displayName": "animehentaimodz",
-  "description": "big tits",
-  "publisher": "hentai-dad",
-  "version": "0.0.1",
+  "name": "dank-modz",
+  "displayName": "dankmodz",
+  "description": "a couple of misc codemods for fun and profit",
+  "publisher": "nehima",
+  "version": "0.0.3",
   "icon": "icon.png",
-
+  "repository": "git@github.com:elliotberry/very-cool-codemodz.git",
   "engines": {
     "vscode": "^1.90.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-  ],
-  "main": "./extension.js",
+  "activationEvents": [],
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
-     
       {
-        "command": "animehentaimodz.fnToConst",
-        "title": "CODE MOD SON"
+        "command": "dankmodz.fnToConst",
+        "title": "change all functions to const declarations"
+      },
+      {
+        "command": "dankmodz.renameFunction",
+        "title": "renameFunction"
+      },
+      {
+        "command": "dankmodz.templateLiteral",
+        "title": "templateLiteral"
+      },
+      {
+        "command": "dankmodz.transformToCamelCase",
+        "title": "transformToCamelCase"
       }
     ]
   },
@@ -30,11 +40,13 @@
     "test": "node ./test/runTest.js"
   },
   "devDependencies": {
-    "eslint": "^8.50.0",
+    "@vscode/vsce": "^3.2.0",
+    "eslint": "^9.13.0",
     "vsce": "^2.15.0",
-    "@vscode/vsce": "^2.27.0"
+     "esbuild": "^0.24.0"
   },
   "dependencies": {
-    "jscodeshift": "^0.15.0"
+
+    "jscodeshift": "^17.0.0"
   }
 }

@@ -1,9 +1,6 @@
-.vscode/**
-.vscode-test/**
-test/**
-.gitignore
-.yarnrc
-vsc-extension-quickstart.md
-**/jsconfig.json
-**/*.map
-**/.eslintrc.json
+# Ignore everything
+**/*
+
+# Except for the dist directory
+!dist/**
+!icon.png

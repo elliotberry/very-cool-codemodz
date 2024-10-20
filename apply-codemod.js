@@ -3,6 +3,7 @@ const {join} = require('path');
 const fs = require('fs/promises');
 const os = require('os');
 const vscode = require('vscode');
+const jscodeshift = require('jscodeshift');
 const jsCodeShiftPath = join(__dirname, 'node_modules', 'jscodeshift', 'bin', 'jscodeshift.js');
 
 const createTempFile = async sourceCode => {
@@ -35,21 +36,24 @@ async function applyCodemod(text, fn = 'renameFunction') {
   return transformedCode;
 }
 
-const editorCodemod = async fnName => {
+const functionGenerator = async fnName => {
+  const theFunction = async () => {
   try {
     const editor = vscode.window.activeTextEditor;
     if (editor) {
       const document = editor.document;
-      // const transformedCode = await applyCodemod(document.getText(), fnName);
+    const transformedCode = await applyCodemod(document.getText(), fnName);
 
       const fullRange = new vscode.Range(document.positionAt(0), document.positionAt(document.getText().length));
 
       editor.edit(editBuilder => {
-        editBuilder.replace(fullRange, 'dad');
+        editBuilder.replace(fullRange, transformedCode);
       });
     }
   } catch (e) {
     console.log(e);
   }
+}
+return theFunction;
 };
-exports.codemod = editorCodemod;
+exports.codemod = functionGenerator;
